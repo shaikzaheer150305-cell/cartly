@@ -1,0 +1,20 @@
+{
+  "name": "cartly",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build && npm --prefix backend run build",
+    "lint:frontend": "npm --prefix frontend run lint",
+    "test:frontend": "npm --prefix frontend run test",
+    "typecheck:backend": "npm --prefix backend run typecheck",
+    "test:backend": "npm --prefix backend run test",
+    "db:generate": "npm --prefix backend run prisma:generate",
+    "db:start": "docker compose -f backend/docker-compose.db.yml --env-file backend/.env up -d",
+    "db:stop": "docker compose -f backend/docker-compose.db.yml --env-file backend/.env down",
+    "db:migrate": "npm --prefix backend run prisma:deploy",
+    "db:seed": "npm --prefix backend run db:seed",
+    "db:verify": "npm --prefix backend run db:verify"
+  }
+}
