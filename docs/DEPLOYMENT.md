@@ -124,14 +124,17 @@ For Vercel, add a project rewrite so the browser calls the API through the web o
 
 Set `VITE_API_URL=/api` before building.
 
-For Netlify, use `_redirects`:
+For Netlify, the root `netlify.toml` sets the base directory to `frontend`,
+installs locked dependencies with `npm ci --include=dev` so TypeScript and Vite
+are available, then runs `npm run build` and publishes `dist` relative to that
+base. It also enables SPA fallback routing so client-side routes such as
+`/admin/orders` load directly.
+Do not put shell commands or Netlify's internal build paths in the Base directory field.
 
-```text
-/api/*  https://BACKEND_HOST/api/:splat  200
-/*      /index.html                     200
-```
-
-Enable SPA fallback routing so client-side routes such as `/admin/orders` load correctly.
+The Express API is deployed separately. For same-origin API requests, add a Netlify
+rewrite from `/api/*` to `https://BACKEND_HOST/api/:splat` with status `200` before
+the SPA fallback and set `VITE_API_URL=/api` before building. Replace `BACKEND_HOST`
+with the deployed API hostname.
 
 ## Post-deployment verification
 
